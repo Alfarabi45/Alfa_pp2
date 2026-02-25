@@ -1,0 +1,28 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int findMissing(const vector<int>& nums) {
+    int n = nums.size();
+    int total = n * (n + 1) / 2; // сумма от 0 до n
+    int sum = 0;
+
+    for (int x : nums) {
+        sum += x;
+    }
+
+    return total - sum;
+}
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<int> nums(n);
+    for (int i = 0; i < n; i++) {
+        cin >> nums[i];
+    }
+
+    cout << findMissing(nums);
+    return 0;
+}
