@@ -1,37 +1,31 @@
 import pygame
-from ball import Ball
 
-pygame.init()
+class Ball:
+    def __init__(self, x, y, radius, step, screen_width, screen_height):
+        self.x = x
+        self.y = y
+        self.radius = radius
+        self.step = step
+        self.screen_width = screen_width
+        self.screen_height = screen_height
+        self.color = (255, 0, 0)
 
-WIDTH, HEIGHT = 600, 400
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Moving Ball")
+    def move(self, direction):
+        if direction == "LEFT":
+            if self.x - self.step - self.radius >= 0:
+                self.x -= self.step
 
-clock = pygame.time.Clock()
-ball = Ball(300, 200)
+        elif direction == "RIGHT":
+            if self.x + self.step + self.radius <= self.screen_width:
+                self.x += self.step
 
-running = True
-while running:
-    screen.fill((255, 255, 255))
+        elif direction == "UP":
+            if self.y - self.step - self.radius >= 0:
+                self.y -= self.step
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+        elif direction == "DOWN":
+            if self.y + self.step + self.radius <= self.screen_height:
+                self.y += self.step
 
-    keys = pygame.key.get_pressed()
-
-    if keys[pygame.K_LEFT]:
-        ball.move(-20, 0, WIDTH, HEIGHT)
-    if keys[pygame.K_RIGHT]:
-        ball.move(20, 0, WIDTH, HEIGHT)
-    if keys[pygame.K_UP]:
-        ball.move(0, -20, WIDTH, HEIGHT)
-    if keys[pygame.K_DOWN]:
-        ball.move(0, 20, WIDTH, HEIGHT)
-
-    ball.draw(screen)
-
-    pygame.display.flip()
-    clock.tick(60)
-
-pygame.quit()
+    def draw(self, screen):
+        pygame.draw.circle(screen, self.color, (self.x, self.y), self.radius)
